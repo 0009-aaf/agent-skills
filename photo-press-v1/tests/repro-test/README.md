@@ -12,14 +12,30 @@
 - 提示词、参数（strength）、流程全部**只从文档提取**，不注入任何记忆中的甜点/措辞。
 - 强风格化工艺（木刻）+ 中等风格化工艺（水彩）各一张，覆盖两种提示词策略分支。
 
-## 结果总览
+## 结果总览（12/12 工艺全部通过）
 
-| 任务 | 首轮 | 工艺质检 | 定向修正 | 最终 6 维评分 | 判定 |
-|------|------|---------|---------|--------------|------|
-| 灯塔 → 木刻 | subject/craft pass | 4/5 pass（柔边渐变 fail） | 重跑一次 | subject 5 / space 5 / light 4 / craft 5 / color 4 / text 5 | pass（柔边渐变残留如实告知） |
-| 日出 → 水彩 | subject/craft pass | 3/4 pass（主体最实 fail） | 重跑一次 | 全 5 分 | pass |
+**第一轮（2 工艺）**：灯塔 → 木刻（首轮 pass，柔边渐变质检 fail，重跑一次仍残留，如实告知）；日出 → 水彩（首轮 pass，主体最实 fail，定向修正后全 pass）。
 
-**结论：文档自包含，陌生执行者可独立产出合格图；返检→定向修正→至多一次→如实告知的规则被真实触发并正确执行。**
+**第二轮（10 工艺，全工艺补测）**：每工艺从文档编译提示词，strength 按文档（印刷工艺 0.9、极简 0.7 特例），6 维评分矩阵逐张审查，**10/10 首轮全 pass（6/6 维）**；高风险工艺追加工艺卡质检抽查也全 pass。
+
+| 工艺 | 源图 | 6 维评分 | 工艺质检抽查 | 判定 |
+|------|------|---------|-------------|------|
+| woodcut 木刻 | 灯塔 | 4-5 分 | 柔边渐变残留（如实告知） | pass* |
+| watercolor 水彩 | 日出 | 全 5 分 | 修正后全 pass | pass |
+| ukiyo-e 浮世绘 | 海浪 | 6/6 | 套印/轮廓线/色数/无西式渐变 全 pass | pass |
+| torn-paper 撕纸 | 灯塔 | 6/6 | — | pass |
+| letterpress 活字 | 灯塔 | 6/6 | 主体未被文字排掉/压印/单色 全 pass | pass |
+| risograph 孔版 | 日出 | 6/6 | — | pass |
+| silkscreen 丝网 | 日出 | 6/6 | — | pass |
+| paper-cut 剪纸 | 灯塔 | 6/6 | — | pass |
+| darkroom 暗房 | 灯塔 | 6/6 | — | pass |
+| cyanotype 蓝晒 | 灯塔 | 6/6 | — | pass |
+| ink-wash 水墨 | 日出 | 6/6 | — | pass |
+| minimalist 极简 | 灯塔 | 6/6 | 背景单一色块/无噪点/2-4 色 全 pass | pass |
+
+\* 木刻 pass 但带已知局限（渐变天空场景柔边渐变残留），已写回工艺卡。
+
+**结论：文档自包含，陌生执行者可独立产出全部 12 种工艺的合格作品；返检→定向修正→至多一次→如实告知的规则被真实触发并正确执行。**
 
 ## 执行日志（木刻）
 
@@ -48,13 +64,15 @@
 
 ## 局限
 
-- 复现测试仅覆盖 2/12 工艺（木刻、水彩）。全工艺复现测试待补。
+- 复现测试已覆盖全部 12 种工艺（文档驱动首轮生成 12/12 pass），但每工艺仅 1 张源图；多源图 × 工艺的交叉覆盖（如人像、花、城市夜景）依赖此前 72 张全量测试的数据。
 - 仅 seedream 通道；gpt-image / Midjourney / SD 的通道参数仍为"已知（未见实测）"。
 
 ---
 
 ## 文件
 
-- `source-test.jpg` / `source-watercolor.jpg` — 源照片
-- `result-woodcut.jpg` / `result-watercolor.jpg` — 定向修正后的最终作品
-- `review-woodcut.json` / `review-watercolor.json` — 6 维评分原始输出
+- `source-test.jpg` / `source-watercolor.jpg` / `source-ukiyo.jpg` — 源照片（灯塔 / 日出山峦 / 海浪）
+- `result-*.jpg` — 12 工艺最终作品（木刻、水彩、浮世绘、撕纸、活字、孔版、丝网、剪纸、暗房、蓝晒、水墨、极简）
+- `review-woodcut.json` / `review-watercolor.json` — 第一轮 6 维评分原始输出
+- `review-all.jsonl` — 第二轮 10 工艺 6 维评分原始输出
+- `qc-minimalist.txt` / `qc-ukiyo-e.txt` / `qc-letterpress.txt` — 高风险工艺质检抽查
