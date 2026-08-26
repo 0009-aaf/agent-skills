@@ -69,10 +69,6 @@
 
 ---
 
-## 文件
+## 归档说明
 
-- `source-test.jpg` / `source-watercolor.jpg` / `source-ukiyo.jpg` — 源照片（灯塔 / 日出山峦 / 海浪）
-- `result-*.jpg` — 12 工艺最终作品（木刻、水彩、浮世绘、撕纸、活字、孔版、丝网、剪纸、暗房、蓝晒、水墨、极简）
-- `review-woodcut.json` / `review-watercolor.json` — 第一轮 6 维评分原始输出
-- `review-all.jsonl` — 第二轮 10 工艺 6 维评分原始输出
-- `qc-minimalist.txt` / `qc-ukiyo-e.txt` / `qc-letterpress.txt` — 高风险工艺质检抽查
+本目录为纯测试记录。测试产物（12 工艺结果图、6 维评分原始输出、质检记录）已归档至 `examples/`（每个工艺一张最终作品 + README，含候选择优说明），本目录不再保留图片与中间文件。

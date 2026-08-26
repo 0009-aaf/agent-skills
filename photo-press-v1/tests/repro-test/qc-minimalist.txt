@@ -1,1 +1,0 @@
-{"subject":"pass","craft":"pass","artifact":"none","verdict":"pass","note":"保留源图主体与构图，符合极简风格要求，极简质检逐项结果：1)pass 2)pass 3)pass 4)pass"}
