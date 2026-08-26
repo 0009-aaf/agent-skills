@@ -2,6 +2,8 @@
 
 个人 Agent Skills 仓库。每个 skill 是一个自包含的目录，可直接安装到 `~/.claude/skills`、`~/.agents/skills` 或 `~/.config/opencode/skills`。
 
+> **Agent Skill collection** — photo-press-v1 turns any photo into a printed-poster by running it through one of 12 real printmaking crafts (woodcut, multi-block ukiyo-e, watercolor, torn paper, letterpress, risograph, silkscreen, paper-cut, darkroom silver, cyanotype, ink-wash, minimalist). Style is a craft, not a filter: three-question photo reading, preserve/transform/remove fidelity contract, craft-defined fidelity ceiling, style-word routing, model-agnostic channel mapping (seedream / gpt-image / Midjourney / SD-Flux), and test-driven parameters backed by 72-image batch + vision-model review.
+
 ## 已收录
 
 ### [photo-press-v1](photo-press-v1/)
