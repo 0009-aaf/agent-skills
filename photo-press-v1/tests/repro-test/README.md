@@ -71,4 +71,14 @@
 
 ## 归档说明
 
-本目录为纯测试记录。测试产物（12 工艺结果图、6 维评分原始输出、质检记录）已归档至 `examples/`（每个工艺一张最终作品 + README，含候选择优说明），本目录不再保留图片与中间文件。
+本目录为复现测试的完整原始归档（2026-08-26 恢复自 GitHub 提交历史，此前提交 a13de40 曾把原始数据移出）：
+
+| 类型 | 文件 |
+|------|------|
+| 6 维评分原始输出 | `review-all.jsonl`（10 工艺）、`review-woodcut.json`、`review-watercolor.json` |
+| 工艺质检抽查 | `qc-letterpress.txt`、`qc-minimalist.txt`、`qc-ukiyo-e.txt` |
+| 结果图 | `result-{12 工艺}.jpg`（每工艺最终作品） |
+| 源图 | `source-test.jpg`（灯塔）、`source-watercolor.jpg`（日出）、`source-ukiyo.jpg`（浪） |
+
+**可复核链路**：12 工艺 × 结果图 → `review-*.json`（6 维判定）→ README 结果总览表 → SKILL.md/craft-cards 数字。
+另见 `../72-matrix/`（12 工艺 × 6 源图 = 72 张全量矩阵，含数值与视觉双轮数据）。

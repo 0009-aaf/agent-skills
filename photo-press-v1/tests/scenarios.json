@@ -1,0 +1,862 @@
+{
+  "_comment": "photo-press 场景回归矩阵（P0#3）：风险场景 × 12 工艺。status: ready=源图就绪; needs-source=源图未归档(picsum seed 可复现); gap=无源图未测试。全量条目来自 72-matrix/specs.csv。",
+  "scene_classes": {
+    "bw-portrait": {
+      "name": "人像 / 黑白源",
+      "source": "72-matrix/sources/p_portrait.jpg",
+      "status": "has-data",
+      "notes": "72-matrix 覆盖（s4 黑白人像，失败率 50%）；彩色人像未覆盖"
+    },
+    "flower": {
+      "name": "花朵 / 毛发",
+      "source": "72-matrix/sources/p_flower.jpg",
+      "status": "has-data",
+      "notes": "72-matrix 覆盖（s5）；硬边工艺 3 失败（paper-cut/risograph/ukiyo-e）"
+    },
+    "night": {
+      "name": "夜景",
+      "source": "",
+      "status": "gap",
+      "notes": "无源图，未测试"
+    },
+    "text-logo": {
+      "name": "带文字 / logo",
+      "source": "",
+      "status": "gap",
+      "notes": "无源图，未测试"
+    },
+    "product": {
+      "name": "产品图",
+      "source": "",
+      "status": "gap",
+      "notes": "无源图，未测试"
+    },
+    "baseline": {
+      "name": "基准场景（灯塔/日出/浪/城市）",
+      "source": "72-matrix/sources/",
+      "status": "has-data",
+      "notes": "72-matrix 覆盖（s1/s2/s3/s6）"
+    }
+  },
+  "scenarios": [
+    {
+      "craft": "cyanotype",
+      "scene": "landmark-lighthouse",
+      "scene_label": "灯塔 lighthouse",
+      "source": "72-matrix/sources/s1-source-test.jpg",
+      "strength": 0.9,
+      "refs": [
+        "assets/craft-samples/cyanotype.jpg"
+      ],
+      "status": "ready"
+    },
+    {
+      "craft": "cyanotype",
+      "scene": "sunrise-mountains",
+      "scene_label": "日出 sunrise",
+      "source": "72-matrix/sources/s2-source-watercolor.jpg",
+      "strength": 0.9,
+      "refs": [
+        "assets/craft-samples/cyanotype.jpg"
+      ],
+      "status": "ready"
+    },
+    {
+      "craft": "cyanotype",
+      "scene": "wave",
+      "scene_label": "浪 wave",
+      "source": "72-matrix/sources/s3-source-ukiyo.jpg",
+      "strength": 0.9,
+      "refs": [
+        "assets/craft-samples/cyanotype.jpg"
+      ],
+      "status": "ready"
+    },
+    {
+      "craft": "cyanotype",
+      "scene": "bw-portrait",
+      "scene_label": "黑白人像 portrait",
+      "source": "72-matrix/sources/p_portrait.jpg",
+      "strength": 0.9,
+      "refs": [
+        "assets/craft-samples/cyanotype.jpg"
+      ],
+      "status": "needs-source"
+    },
+    {
+      "craft": "cyanotype",
+      "scene": "flower",
+      "scene_label": "彩色花 flower",
+      "source": "72-matrix/sources/p_flower.jpg",
+      "strength": 0.9,
+      "refs": [
+        "assets/craft-samples/cyanotype.jpg"
+      ],
+      "status": "needs-source"
+    },
+    {
+      "craft": "cyanotype",
+      "scene": "city-street",
+      "scene_label": "城市街道 city",
+      "source": "72-matrix/sources/p_city.jpg",
+      "strength": 0.9,
+      "refs": [
+        "assets/craft-samples/cyanotype.jpg"
+      ],
+      "status": "needs-source"
+    },
+    {
+      "craft": "darkroom",
+      "scene": "landmark-lighthouse",
+      "scene_label": "灯塔 lighthouse",
+      "source": "72-matrix/sources/s1-source-test.jpg",
+      "strength": 0.9,
+      "refs": [
+        "assets/craft-samples/darkroom.jpg"
+      ],
+      "status": "ready"
+    },
+    {
+      "craft": "darkroom",
+      "scene": "sunrise-mountains",
+      "scene_label": "日出 sunrise",
+      "source": "72-matrix/sources/s2-source-watercolor.jpg",
+      "strength": 0.9,
+      "refs": [
+        "assets/craft-samples/darkroom.jpg"
+      ],
+      "status": "ready"
+    },
+    {
+      "craft": "darkroom",
+      "scene": "wave",
+      "scene_label": "浪 wave",
+      "source": "72-matrix/sources/s3-source-ukiyo.jpg",
+      "strength": 0.9,
+      "refs": [
+        "assets/craft-samples/darkroom.jpg"
+      ],
+      "status": "ready"
+    },
+    {
+      "craft": "darkroom",
+      "scene": "bw-portrait",
+      "scene_label": "黑白人像 portrait",
+      "source": "72-matrix/sources/p_portrait.jpg",
+      "strength": 0.9,
+      "refs": [
+        "assets/craft-samples/darkroom.jpg"
+      ],
+      "status": "needs-source"
+    },
+    {
+      "craft": "darkroom",
+      "scene": "flower",
+      "scene_label": "彩色花 flower",
+      "source": "72-matrix/sources/p_flower.jpg",
+      "strength": 0.9,
+      "refs": [
+        "assets/craft-samples/darkroom.jpg"
+      ],
+      "status": "needs-source"
+    },
+    {
+      "craft": "darkroom",
+      "scene": "city-street",
+      "scene_label": "城市街道 city",
+      "source": "72-matrix/sources/p_city.jpg",
+      "strength": 0.9,
+      "refs": [
+        "assets/craft-samples/darkroom.jpg"
+      ],
+      "status": "needs-source"
+    },
+    {
+      "craft": "ink-wash",
+      "scene": "landmark-lighthouse",
+      "scene_label": "灯塔 lighthouse",
+      "source": "72-matrix/sources/s1-source-test.jpg",
+      "strength": 0.9,
+      "refs": [
+        "assets/craft-samples/ink-wash.jpg"
+      ],
+      "status": "ready"
+    },
+    {
+      "craft": "ink-wash",
+      "scene": "sunrise-mountains",
+      "scene_label": "日出 sunrise",
+      "source": "72-matrix/sources/s2-source-watercolor.jpg",
+      "strength": 0.9,
+      "refs": [
+        "assets/craft-samples/ink-wash.jpg"
+      ],
+      "status": "ready"
+    },
+    {
+      "craft": "ink-wash",
+      "scene": "wave",
+      "scene_label": "浪 wave",
+      "source": "72-matrix/sources/s3-source-ukiyo.jpg",
+      "strength": 0.9,
+      "refs": [
+        "assets/craft-samples/ink-wash.jpg"
+      ],
+      "status": "ready"
+    },
+    {
+      "craft": "ink-wash",
+      "scene": "bw-portrait",
+      "scene_label": "黑白人像 portrait",
+      "source": "72-matrix/sources/p_portrait.jpg",
+      "strength": 0.9,
+      "refs": [
+        "assets/craft-samples/ink-wash.jpg"
+      ],
+      "status": "needs-source"
+    },
+    {
+      "craft": "ink-wash",
+      "scene": "flower",
+      "scene_label": "彩色花 flower",
+      "source": "72-matrix/sources/p_flower.jpg",
+      "strength": 0.9,
+      "refs": [
+        "assets/craft-samples/ink-wash.jpg"
+      ],
+      "status": "needs-source"
+    },
+    {
+      "craft": "ink-wash",
+      "scene": "city-street",
+      "scene_label": "城市街道 city",
+      "source": "72-matrix/sources/p_city.jpg",
+      "strength": 0.9,
+      "refs": [
+        "assets/craft-samples/ink-wash.jpg"
+      ],
+      "status": "needs-source"
+    },
+    {
+      "craft": "letterpress",
+      "scene": "landmark-lighthouse",
+      "scene_label": "灯塔 lighthouse",
+      "source": "72-matrix/sources/s1-source-test.jpg",
+      "strength": 0.9,
+      "refs": [
+        "assets/craft-samples/letterpress.jpg"
+      ],
+      "status": "ready"
+    },
+    {
+      "craft": "letterpress",
+      "scene": "sunrise-mountains",
+      "scene_label": "日出 sunrise",
+      "source": "72-matrix/sources/s2-source-watercolor.jpg",
+      "strength": 0.9,
+      "refs": [
+        "assets/craft-samples/letterpress.jpg"
+      ],
+      "status": "ready"
+    },
+    {
+      "craft": "letterpress",
+      "scene": "wave",
+      "scene_label": "浪 wave",
+      "source": "72-matrix/sources/s3-source-ukiyo.jpg",
+      "strength": 0.9,
+      "refs": [
+        "assets/craft-samples/letterpress.jpg"
+      ],
+      "status": "ready"
+    },
+    {
+      "craft": "letterpress",
+      "scene": "bw-portrait",
+      "scene_label": "黑白人像 portrait",
+      "source": "72-matrix/sources/p_portrait.jpg",
+      "strength": 0.9,
+      "refs": [
+        "assets/craft-samples/letterpress.jpg"
+      ],
+      "status": "needs-source"
+    },
+    {
+      "craft": "letterpress",
+      "scene": "flower",
+      "scene_label": "彩色花 flower",
+      "source": "72-matrix/sources/p_flower.jpg",
+      "strength": 0.9,
+      "refs": [
+        "assets/craft-samples/letterpress.jpg"
+      ],
+      "status": "needs-source"
+    },
+    {
+      "craft": "letterpress",
+      "scene": "city-street",
+      "scene_label": "城市街道 city",
+      "source": "72-matrix/sources/p_city.jpg",
+      "strength": 0.9,
+      "refs": [
+        "assets/craft-samples/letterpress.jpg"
+      ],
+      "status": "needs-source"
+    },
+    {
+      "craft": "minimalist",
+      "scene": "landmark-lighthouse",
+      "scene_label": "灯塔 lighthouse",
+      "source": "72-matrix/sources/s1-source-test.jpg",
+      "strength": 0.7,
+      "refs": [
+        "assets/craft-samples/minimalist.jpg"
+      ],
+      "status": "ready"
+    },
+    {
+      "craft": "minimalist",
+      "scene": "sunrise-mountains",
+      "scene_label": "日出 sunrise",
+      "source": "72-matrix/sources/s2-source-watercolor.jpg",
+      "strength": 0.7,
+      "refs": [
+        "assets/craft-samples/minimalist.jpg"
+      ],
+      "status": "ready"
+    },
+    {
+      "craft": "minimalist",
+      "scene": "wave",
+      "scene_label": "浪 wave",
+      "source": "72-matrix/sources/s3-source-ukiyo.jpg",
+      "strength": 0.7,
+      "refs": [
+        "assets/craft-samples/minimalist.jpg"
+      ],
+      "status": "ready"
+    },
+    {
+      "craft": "minimalist",
+      "scene": "bw-portrait",
+      "scene_label": "黑白人像 portrait",
+      "source": "72-matrix/sources/p_portrait.jpg",
+      "strength": 0.7,
+      "refs": [
+        "assets/craft-samples/minimalist.jpg"
+      ],
+      "status": "needs-source"
+    },
+    {
+      "craft": "minimalist",
+      "scene": "flower",
+      "scene_label": "彩色花 flower",
+      "source": "72-matrix/sources/p_flower.jpg",
+      "strength": 0.7,
+      "refs": [
+        "assets/craft-samples/minimalist.jpg"
+      ],
+      "status": "needs-source"
+    },
+    {
+      "craft": "minimalist",
+      "scene": "city-street",
+      "scene_label": "城市街道 city",
+      "source": "72-matrix/sources/p_city.jpg",
+      "strength": 0.7,
+      "refs": [
+        "assets/craft-samples/minimalist.jpg"
+      ],
+      "status": "needs-source"
+    },
+    {
+      "craft": "paper-cut",
+      "scene": "landmark-lighthouse",
+      "scene_label": "灯塔 lighthouse",
+      "source": "72-matrix/sources/s1-source-test.jpg",
+      "strength": 0.9,
+      "refs": [
+        "assets/craft-samples/paper-cut.jpg"
+      ],
+      "status": "ready"
+    },
+    {
+      "craft": "paper-cut",
+      "scene": "sunrise-mountains",
+      "scene_label": "日出 sunrise",
+      "source": "72-matrix/sources/s2-source-watercolor.jpg",
+      "strength": 0.9,
+      "refs": [
+        "assets/craft-samples/paper-cut.jpg"
+      ],
+      "status": "ready"
+    },
+    {
+      "craft": "paper-cut",
+      "scene": "wave",
+      "scene_label": "浪 wave",
+      "source": "72-matrix/sources/s3-source-ukiyo.jpg",
+      "strength": 0.9,
+      "refs": [
+        "assets/craft-samples/paper-cut.jpg"
+      ],
+      "status": "ready"
+    },
+    {
+      "craft": "paper-cut",
+      "scene": "bw-portrait",
+      "scene_label": "黑白人像 portrait",
+      "source": "72-matrix/sources/p_portrait.jpg",
+      "strength": 0.9,
+      "refs": [
+        "assets/craft-samples/paper-cut.jpg"
+      ],
+      "status": "needs-source"
+    },
+    {
+      "craft": "paper-cut",
+      "scene": "flower",
+      "scene_label": "彩色花 flower",
+      "source": "72-matrix/sources/p_flower.jpg",
+      "strength": 0.9,
+      "refs": [
+        "assets/craft-samples/paper-cut.jpg"
+      ],
+      "status": "needs-source"
+    },
+    {
+      "craft": "paper-cut",
+      "scene": "city-street",
+      "scene_label": "城市街道 city",
+      "source": "72-matrix/sources/p_city.jpg",
+      "strength": 0.9,
+      "refs": [
+        "assets/craft-samples/paper-cut.jpg"
+      ],
+      "status": "needs-source"
+    },
+    {
+      "craft": "risograph",
+      "scene": "landmark-lighthouse",
+      "scene_label": "灯塔 lighthouse",
+      "source": "72-matrix/sources/s1-source-test.jpg",
+      "strength": 0.9,
+      "refs": [
+        "assets/craft-samples/risograph.jpg"
+      ],
+      "status": "ready"
+    },
+    {
+      "craft": "risograph",
+      "scene": "sunrise-mountains",
+      "scene_label": "日出 sunrise",
+      "source": "72-matrix/sources/s2-source-watercolor.jpg",
+      "strength": 0.9,
+      "refs": [
+        "assets/craft-samples/risograph.jpg"
+      ],
+      "status": "ready"
+    },
+    {
+      "craft": "risograph",
+      "scene": "wave",
+      "scene_label": "浪 wave",
+      "source": "72-matrix/sources/s3-source-ukiyo.jpg",
+      "strength": 0.9,
+      "refs": [
+        "assets/craft-samples/risograph.jpg"
+      ],
+      "status": "ready"
+    },
+    {
+      "craft": "risograph",
+      "scene": "bw-portrait",
+      "scene_label": "黑白人像 portrait",
+      "source": "72-matrix/sources/p_portrait.jpg",
+      "strength": 0.9,
+      "refs": [
+        "assets/craft-samples/risograph.jpg"
+      ],
+      "status": "needs-source"
+    },
+    {
+      "craft": "risograph",
+      "scene": "flower",
+      "scene_label": "彩色花 flower",
+      "source": "72-matrix/sources/p_flower.jpg",
+      "strength": 0.9,
+      "refs": [
+        "assets/craft-samples/risograph.jpg"
+      ],
+      "status": "needs-source"
+    },
+    {
+      "craft": "risograph",
+      "scene": "city-street",
+      "scene_label": "城市街道 city",
+      "source": "72-matrix/sources/p_city.jpg",
+      "strength": 0.9,
+      "refs": [
+        "assets/craft-samples/risograph.jpg"
+      ],
+      "status": "needs-source"
+    },
+    {
+      "craft": "silkscreen",
+      "scene": "landmark-lighthouse",
+      "scene_label": "灯塔 lighthouse",
+      "source": "72-matrix/sources/s1-source-test.jpg",
+      "strength": 0.9,
+      "refs": [
+        "assets/craft-samples/silkscreen.jpg"
+      ],
+      "status": "ready"
+    },
+    {
+      "craft": "silkscreen",
+      "scene": "sunrise-mountains",
+      "scene_label": "日出 sunrise",
+      "source": "72-matrix/sources/s2-source-watercolor.jpg",
+      "strength": 0.9,
+      "refs": [
+        "assets/craft-samples/silkscreen.jpg"
+      ],
+      "status": "ready"
+    },
+    {
+      "craft": "silkscreen",
+      "scene": "wave",
+      "scene_label": "浪 wave",
+      "source": "72-matrix/sources/s3-source-ukiyo.jpg",
+      "strength": 0.9,
+      "refs": [
+        "assets/craft-samples/silkscreen.jpg"
+      ],
+      "status": "ready"
+    },
+    {
+      "craft": "silkscreen",
+      "scene": "bw-portrait",
+      "scene_label": "黑白人像 portrait",
+      "source": "72-matrix/sources/p_portrait.jpg",
+      "strength": 0.9,
+      "refs": [
+        "assets/craft-samples/silkscreen.jpg"
+      ],
+      "status": "needs-source"
+    },
+    {
+      "craft": "silkscreen",
+      "scene": "flower",
+      "scene_label": "彩色花 flower",
+      "source": "72-matrix/sources/p_flower.jpg",
+      "strength": 0.9,
+      "refs": [
+        "assets/craft-samples/silkscreen.jpg"
+      ],
+      "status": "needs-source"
+    },
+    {
+      "craft": "silkscreen",
+      "scene": "city-street",
+      "scene_label": "城市街道 city",
+      "source": "72-matrix/sources/p_city.jpg",
+      "strength": 0.9,
+      "refs": [
+        "assets/craft-samples/silkscreen.jpg"
+      ],
+      "status": "needs-source"
+    },
+    {
+      "craft": "torn-paper",
+      "scene": "landmark-lighthouse",
+      "scene_label": "灯塔 lighthouse",
+      "source": "72-matrix/sources/s1-source-test.jpg",
+      "strength": 0.9,
+      "refs": [
+        "assets/craft-samples/torn-paper.jpg"
+      ],
+      "status": "ready"
+    },
+    {
+      "craft": "torn-paper",
+      "scene": "sunrise-mountains",
+      "scene_label": "日出 sunrise",
+      "source": "72-matrix/sources/s2-source-watercolor.jpg",
+      "strength": 0.9,
+      "refs": [
+        "assets/craft-samples/torn-paper.jpg"
+      ],
+      "status": "ready"
+    },
+    {
+      "craft": "torn-paper",
+      "scene": "wave",
+      "scene_label": "浪 wave",
+      "source": "72-matrix/sources/s3-source-ukiyo.jpg",
+      "strength": 0.9,
+      "refs": [
+        "assets/craft-samples/torn-paper.jpg"
+      ],
+      "status": "ready"
+    },
+    {
+      "craft": "torn-paper",
+      "scene": "bw-portrait",
+      "scene_label": "黑白人像 portrait",
+      "source": "72-matrix/sources/p_portrait.jpg",
+      "strength": 0.9,
+      "refs": [
+        "assets/craft-samples/torn-paper.jpg"
+      ],
+      "status": "needs-source"
+    },
+    {
+      "craft": "torn-paper",
+      "scene": "flower",
+      "scene_label": "彩色花 flower",
+      "source": "72-matrix/sources/p_flower.jpg",
+      "strength": 0.9,
+      "refs": [
+        "assets/craft-samples/torn-paper.jpg"
+      ],
+      "status": "needs-source"
+    },
+    {
+      "craft": "torn-paper",
+      "scene": "city-street",
+      "scene_label": "城市街道 city",
+      "source": "72-matrix/sources/p_city.jpg",
+      "strength": 0.9,
+      "refs": [
+        "assets/craft-samples/torn-paper.jpg"
+      ],
+      "status": "needs-source"
+    },
+    {
+      "craft": "ukiyo-e",
+      "scene": "landmark-lighthouse",
+      "scene_label": "灯塔 lighthouse",
+      "source": "72-matrix/sources/s1-source-test.jpg",
+      "strength": 0.9,
+      "refs": [
+        "assets/craft-samples/ukiyo-e.jpg"
+      ],
+      "status": "ready"
+    },
+    {
+      "craft": "ukiyo-e",
+      "scene": "sunrise-mountains",
+      "scene_label": "日出 sunrise",
+      "source": "72-matrix/sources/s2-source-watercolor.jpg",
+      "strength": 0.9,
+      "refs": [
+        "assets/craft-samples/ukiyo-e.jpg"
+      ],
+      "status": "ready"
+    },
+    {
+      "craft": "ukiyo-e",
+      "scene": "wave",
+      "scene_label": "浪 wave",
+      "source": "72-matrix/sources/s3-source-ukiyo.jpg",
+      "strength": 0.9,
+      "refs": [
+        "assets/craft-samples/ukiyo-e.jpg"
+      ],
+      "status": "ready"
+    },
+    {
+      "craft": "ukiyo-e",
+      "scene": "bw-portrait",
+      "scene_label": "黑白人像 portrait",
+      "source": "72-matrix/sources/p_portrait.jpg",
+      "strength": 0.9,
+      "refs": [
+        "assets/craft-samples/ukiyo-e.jpg"
+      ],
+      "status": "needs-source"
+    },
+    {
+      "craft": "ukiyo-e",
+      "scene": "flower",
+      "scene_label": "彩色花 flower",
+      "source": "72-matrix/sources/p_flower.jpg",
+      "strength": 0.9,
+      "refs": [
+        "assets/craft-samples/ukiyo-e.jpg"
+      ],
+      "status": "needs-source"
+    },
+    {
+      "craft": "ukiyo-e",
+      "scene": "city-street",
+      "scene_label": "城市街道 city",
+      "source": "72-matrix/sources/p_city.jpg",
+      "strength": 0.9,
+      "refs": [
+        "assets/craft-samples/ukiyo-e.jpg"
+      ],
+      "status": "needs-source"
+    },
+    {
+      "craft": "watercolor",
+      "scene": "landmark-lighthouse",
+      "scene_label": "灯塔 lighthouse",
+      "source": "72-matrix/sources/s1-source-test.jpg",
+      "strength": 0.9,
+      "refs": [
+        "assets/craft-samples/watercolor.jpg"
+      ],
+      "status": "ready"
+    },
+    {
+      "craft": "watercolor",
+      "scene": "sunrise-mountains",
+      "scene_label": "日出 sunrise",
+      "source": "72-matrix/sources/s2-source-watercolor.jpg",
+      "strength": 0.9,
+      "refs": [
+        "assets/craft-samples/watercolor.jpg"
+      ],
+      "status": "ready"
+    },
+    {
+      "craft": "watercolor",
+      "scene": "wave",
+      "scene_label": "浪 wave",
+      "source": "72-matrix/sources/s3-source-ukiyo.jpg",
+      "strength": 0.9,
+      "refs": [
+        "assets/craft-samples/watercolor.jpg"
+      ],
+      "status": "ready"
+    },
+    {
+      "craft": "watercolor",
+      "scene": "bw-portrait",
+      "scene_label": "黑白人像 portrait",
+      "source": "72-matrix/sources/p_portrait.jpg",
+      "strength": 0.9,
+      "refs": [
+        "assets/craft-samples/watercolor.jpg"
+      ],
+      "status": "needs-source"
+    },
+    {
+      "craft": "watercolor",
+      "scene": "flower",
+      "scene_label": "彩色花 flower",
+      "source": "72-matrix/sources/p_flower.jpg",
+      "strength": 0.9,
+      "refs": [
+        "assets/craft-samples/watercolor.jpg"
+      ],
+      "status": "needs-source"
+    },
+    {
+      "craft": "watercolor",
+      "scene": "city-street",
+      "scene_label": "城市街道 city",
+      "source": "72-matrix/sources/p_city.jpg",
+      "strength": 0.9,
+      "refs": [
+        "assets/craft-samples/watercolor.jpg"
+      ],
+      "status": "needs-source"
+    },
+    {
+      "craft": "woodcut",
+      "scene": "landmark-lighthouse",
+      "scene_label": "灯塔 lighthouse",
+      "source": "72-matrix/sources/s1-source-test.jpg",
+      "strength": 0.9,
+      "refs": [
+        "assets/craft-samples/woodcut.jpg"
+      ],
+      "status": "ready"
+    },
+    {
+      "craft": "woodcut",
+      "scene": "sunrise-mountains",
+      "scene_label": "日出 sunrise",
+      "source": "72-matrix/sources/s2-source-watercolor.jpg",
+      "strength": 0.9,
+      "refs": [
+        "assets/craft-samples/woodcut.jpg"
+      ],
+      "status": "ready"
+    },
+    {
+      "craft": "woodcut",
+      "scene": "wave",
+      "scene_label": "浪 wave",
+      "source": "72-matrix/sources/s3-source-ukiyo.jpg",
+      "strength": 0.9,
+      "refs": [
+        "assets/craft-samples/woodcut.jpg"
+      ],
+      "status": "ready"
+    },
+    {
+      "craft": "woodcut",
+      "scene": "bw-portrait",
+      "scene_label": "黑白人像 portrait",
+      "source": "72-matrix/sources/p_portrait.jpg",
+      "strength": 0.9,
+      "refs": [
+        "assets/craft-samples/woodcut.jpg"
+      ],
+      "status": "needs-source"
+    },
+    {
+      "craft": "woodcut",
+      "scene": "flower",
+      "scene_label": "彩色花 flower",
+      "source": "72-matrix/sources/p_flower.jpg",
+      "strength": 0.9,
+      "refs": [
+        "assets/craft-samples/woodcut.jpg"
+      ],
+      "status": "needs-source"
+    },
+    {
+      "craft": "woodcut",
+      "scene": "city-street",
+      "scene_label": "城市街道 city",
+      "source": "72-matrix/sources/p_city.jpg",
+      "strength": 0.9,
+      "refs": [
+        "assets/craft-samples/woodcut.jpg"
+      ],
+      "status": "needs-source"
+    },
+    {
+      "craft": "",
+      "scene": "night",
+      "scene_label": "夜景",
+      "source": "",
+      "strength": 0.9,
+      "refs": [],
+      "status": "gap"
+    },
+    {
+      "craft": "",
+      "scene": "text-logo",
+      "scene_label": "带文字 / logo",
+      "source": "",
+      "strength": 0.9,
+      "refs": [],
+      "status": "gap"
+    },
+    {
+      "craft": "",
+      "scene": "product",
+      "scene_label": "产品图",
+      "source": "",
+      "strength": 0.9,
+      "refs": [],
+      "status": "gap"
+    }
+  ]
+}

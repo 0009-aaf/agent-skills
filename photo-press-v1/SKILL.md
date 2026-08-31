@@ -1,5 +1,6 @@
 ---
 name: photo-press-v1
+version: 1.1.0
 description: "Turn a user-supplied photo into a printed-poster by picking one of 12 craft processes (woodcut, multi-block ukiyo-e, watercolor, torn paper, letterpress, risograph, silkscreen, paper-cut, darkroom silver, cyanotype, ink-wash, minimalist) and running it through that craft's full procedure. Reads the photo as three questions (what it is, why it is worth printing, which craft enlarges that moment) instead of a feature checklist, and routes casual style words (retro, fresh, pop, ink-wash, minimal) to the matching craft automatically. Keeps the scene truthful with a preserve/transform/remove contract, a two-channel reference protocol (original photo for content, craft sample for texture), and a fidelity/abstraction dial pair whose ranges come from the chosen craft. Model-agnostic: a channel-capability check maps the fidelity dial onto whatever image model is available (reference-guided editing with a fidelity parameter), and falls back to a procedural-fidelity pipeline when no reference-capable channel exists. Verifies every output against the source photo, including craft-specific quality checks. Use when the user wants a stylized poster from a photo and cares that the subject stays recognizable, with abstraction that comes from the craft rather than from filter keywords."
 ---
 
@@ -31,6 +32,13 @@ description: "Turn a user-supplied photo into a printed-poster by picking one of
 - 用户提供照片并要求转换 = 同意使用图片生成；不重复询问。
 - 只向生成服务发送最终提示词与所需参考图；不浏览、搜索、上传、保存、分享用户源材料。
 - 生成式重建保留场景事实与构图，不保证像素级与原图一致；需要精确保真（人脸 / 产品 / logo / 精确文字）时建议走分割合成或局部重绘。
+
+## 标注体系（本 skill 的"证伪路径"）
+
+- **[VERIFIED]**：有原始实测数据支撑（72 张矩阵 `tests/72-matrix/`、复现测试 `tests/repro-test/`、回归 `tests/72-matrix/regression.csv`），数字可复核。
+- **[ASSUMED]**：未实测的推断（如英文模型方言、未实测通道参数）。使用前须按第七步探针验证；实测后把标注改成 [VERIFIED] 并附数据来源。
+- 通道表中的 ✅ / ⚠️ 同义：✅=实测过，⚠️=已知未实测（勿当结论）。
+- 数据归档与可执行回归见 `tests/`；改 SKILL.md 或工艺卡后跑 `python tests/run-repro.py --dry-run` 做一致性冒烟。
 
 ---
 
@@ -112,8 +120,8 @@ description: "Turn a user-supplied photo into a printed-poster by picking one of
 
 - 用户要"脸一模一样" → 不选木刻（上限剪影级），选银盐或水彩。
 - 用户要"再概括一点" → 换更粗的工艺（木刻 / 撕纸），不是在精细工艺上硬简化。
-- **人像 / 黑白源图是高风险输入**（全量测试失败率 50%）：优先摄影工艺（银盐 / 蓝晒 / 水彩），或配具体的人物保真描述。
-- **有机复杂形状主体（花 / 人群 / 毛发）对硬边类工艺（剪纸 / 孔版 / 浮世绘）不适用**：视觉实测花朵主体在硬边化时丢失识别性且无法用具体描述救回，此类主体路由到摄影/水性工艺。
+- **人像 / 黑白源图是高风险输入**（[VERIFIED] 全量测试失败率 50%，见 `tests/72-matrix/`）：优先摄影工艺（银盐 / 蓝晒 / 水彩），或配具体的人物保真描述。
+- **有机复杂形状主体（花 / 人群 / 毛发）对硬边类工艺（剪纸 / 孔版 / 浮世绘）不适用**（[VERIFIED] 视觉实测：72 张矩阵 run2 视觉审查中，花主体在 paper-cut/risograph/ukiyo-e 三个硬边工艺上各 1 个失败，且具体描述无法救回）：此类主体路由到摄影/水性工艺。
 
 ---
 
@@ -164,12 +172,22 @@ description: "Turn a user-supplied photo into a printed-poster by picking one of
 
 按顺序编译。每模块一小段，只写能变成像素的指令，**总长 200-350 词**。过长提示词会淹没参考图，模型会按文字重画而忽略原图。
 
-**模型方言（先定再写）**——适配当前模型的"方言"，seedream 系中文模型实测：
+**模型方言（先定再写）**——适配当前模型的"方言"。参数表按模型区分；标 ⚠️ 的列为未实测推断，勿当结论。
 
-- **中文直白保真锚定 > 英文 Preserve/Change 模板**：中文直白锚定（"严格保持原图构图不变：...全部与原图一致。只改变媒介：..."）比英文结构提示词保真更高（边缘相关性 0.555 vs 0.419）。
-- **强风格化工艺（木刻等）减风格堆叠**：风格词堆叠越密，模型越倾向"重新画一幅"而非"编辑照片"（堆叠 5+ 风格词时边缘相关性 0.555 → 0.419）。只保留工艺卡核心 3-5 个痕迹词，保真锚定句放最前面。
-- **中等风格化工艺（水彩 / 浮世绘 / 银盐）对措辞不敏感**：保真主要由 `reference_strength` 决定，正常写即可。
-- **主体描述具体化对"困难主体"有帮助**：人像/复杂纹理主体配具体描述（"人物轮廓与姿态""花朵形状与花茎走向"）保真提升（人像 0.382→0.395、花 0.354→0.414）；人物类主体必须描述"脸/姿态"的保留等级，否则人脸被工艺重绘（人像失败率 50%）。
+| 模型 | 保真句式 | 保真参数区间（松 / 标准 / 紧） | 风格词上限 | 实测状态 |
+|------|---------|------------------------------|-----------|---------|
+| seedream 系（中文模型） | 中文直白保真锚定（"严格保持原图构图不变…只改变媒介…"） | `reference_strength` 0.5 / 0.7-0.8 / 0.9（紧档甜点，更高无增益） | 3-5 核心痕迹词（堆叠 5+ → 边缘相关 0.555→0.419） | ✅ 72 张矩阵实测 |
+| gpt-image 系（gpt-image-1/2） | Preserve/Change 句式（英文，与中文锚定同构，假设成立） | `input_fidelity` low / high / high+强锚定 | 未知 | ⚠️ 未实测 |
+| Midjourney | `--cref` 锁主体 + 保真锚定句 | `--stylize` 600-1000 / 200-400 / 0-100 + `--cref` | 未知 | ⚠️ 未实测 |
+| SD / Flux 开源系 | ControlNet 锁结构 + IP-Adapter 风格 | IP-Adapter 权重 高 / 中 / 低 + ControlNet | 未知 | ⚠️ 未实测 |
+
+方言实证（均为 seedream 通道，72 张矩阵 / 回归数据支撑）：
+
+- **[VERIFIED] 中文直白保真锚定 > 英文 Preserve/Change 模板**：中文直白锚定（"严格保持原图构图不变：…全部与原图一致。只改变媒介：…"）比英文结构提示词保真更高（边缘相关性 0.555 vs 0.419，批量测试）。数据：`tests/72-matrix/`。
+- **[VERIFIED] 强风格化工艺（木刻等）减风格堆叠**：风格词堆叠越密，模型越倾向"重新画一幅"而非"编辑照片"（堆叠 5+ 风格词时边缘相关性 0.555 → 0.419）。只保留工艺卡核心 3-5 个痕迹词，保真锚定句放最前面。
+- **[VERIFIED] 中等风格化工艺（水彩 / 浮世绘 / 银盐）对措辞不敏感**：保真主要由 `reference_strength` 决定，正常写即可。
+- **[VERIFIED] 主体描述具体化对"困难主体"有帮助**：人像/复杂纹理主体配具体描述（"人物轮廓与姿态""花朵形状与花茎走向"）保真提升（人像 0.382→0.395、花 0.354→0.414，回归数据见 `tests/72-matrix/regression.csv`）；人物类主体必须描述"脸/姿态"的保留等级，否则人脸被工艺重绘（人像失败率 50%）。
+- **[ASSUMED] 英文模型用 Preserve/Change 句式与中文锚定"同构"**：gpt-image/MJ/SD 的英文方言从未实测，此为推断，须按第七步探针验证后改用。
 
 1. **画布与布局**：宽高比（默认跟随源图；改比例时明确"扩展"契约——保留主体与地平线，只扩展外围）、区域占比、焦点位置。
 2. **保真锚定（强风格化工艺置顶）**：PRESERVE 清单 + 空间锚定 + MAY TRANSFORM + REMOVE，中文直白句式收束：
@@ -178,21 +196,21 @@ description: "Turn a user-supplied photo into a printed-poster by picking one of
    只改变媒介：把照片变成 [工艺] 质感。[工艺卡核心痕迹 3-5 词]。
    不重新构图，不添加原图没有的元素。
    ```
-   （英文模型可改回 Preserve/Change 句式，同构。）
+   （[ASSUMED] 英文模型可改回 Preserve/Change 句式，同构——未实测，见模型方言表。）
 3. **双通道分工**（按内容寻址，不依赖索引号；多参考图必须逐张分配角色，否则模型平均化所有输入产生混合结果）：
    ```
    原图（内容通道）提供主体、构图与光线，保持其内容不变；
    工艺样张（质感通道）只提供媒介与质感（颗粒、笔触、纸纹、工艺痕迹）；
    禁止工艺样张的题材、物品、文字进入画面。
    ```
-   （双参考实测：源图 + 工艺 anchor 对保真有小幅增益但不稳定，可选增强；单参考 + 文字质感描述是已验证基线。）
+   （[VERIFIED] 双参考实测：源图 + 工艺 anchor 对保真有小幅增益但不稳定（浮世绘边缘相似度 0.761→0.779、水彩无差别，历史批量测试），可选增强；单参考 + 文字质感描述是已验证基线。）
 4. **分层**：前景 / 中景 / 背景 + 各层清晰度 / 明度 / 大小（用第五步模板）。
 5. **工艺语言**：注入所选工艺卡的痕迹、色彩规则、构图基因。强风格化工艺控制在 3-5 个核心词。
 6. **抽象刻度**：按抽象旋钮输出量化简化指令（只限工艺区）。
 7. **文字策略**：用户文字原样复刻；否则按工艺卡（活字 / 手写 / 印章 / 丝网），多数工艺 no-text 或 ≤5 英文词 / ≤8 汉字。确定性文字（日期 / 编号 / 地址）不交给图片生成。
 8. **硬避免**：通用硬避免 + 该工艺硬避免。
 
-> **否定句用量限制**（seedream 官方实践）：图片模型无独立负面提示字段，否定直接写在主提示词里，**每张提示词只写 1-2 条否定**；否定列表过长会分散注意力。通用硬避免清单是**排查清单**（返检时逐条对照），不全塞进提示词。写进提示词的 1-2 条选当前案例最可能翻车的。
+> **否定句用量限制**（[VERIFIED] seedream 官方实践 + 实测）：图片模型无独立负面提示字段，否定直接写在主提示词里，**每张提示词只写 1-2 条否定**；否定列表过长会分散注意力。通用硬避免清单是**排查清单**（返检时逐条对照），不全塞进提示词。写进提示词的 1-2 条选当前案例最可能翻车的。
 
 通用硬避免（排查清单）：主体被工艺重绘 / 空间关系错乱 / 光源方向反转 / 全画面均等清晰 / 逐片树叶逐根发丝 / 凭空增加原图没有的主要物件 / 工艺痕迹不来自工序（凭空装饰）/ 工艺互串（木刻里出现水彩晕染）/ 错字乱码 / 水印 logo / 玻璃拟态与 3D 深度 / 卡通化 / 广告文案层级。
 
@@ -200,33 +218,33 @@ description: "Turn a user-supplied photo into a printed-poster by picking one of
 
 ## 第七步：通道能力检查与生成
 
-**模型无关声明**：本 skill 的协议（双通道、保真契约、返检）不绑定任何模型。生成前先判定当前通道是否支持"以参考图编辑"，再按下表映射保真参数。下表是已知通道适配参考（含本 skill 实测数据）；未列出的通道按检查流程实测后自行补充。
+**模型无关声明**：本 skill 的协议（双通道、保真契约、返检）不绑定任何模型。生成前先判定当前通道是否支持"以参考图编辑"，再按下表映射保真参数。下表是已知通道适配参考（含本 skill 实测数据）；未列出的通道按检查流程实测后自行补充。**实测状态语义：✅=本 skill 实测过（附数据源）；⚠️=已知能力但未实测，勿当结论——用了就要先跑探针。**
 
 1. **支持且保真可靠** → 走完整双通道，按适配表设保真参数：
 
    | 通道 / 模型 | 参考图能力 | 保真参数 | 验证状态 |
    |------------|-----------|---------|---------|
-   | 火山引擎 Agent Plan seedream（`doubao-seedream-5.0-lite`） | `image` 传参考图（base64 本地传，URL 可能超时；单张 / 数组最多 14 张），多参考需逐张分配角色 | `reference_strength` 0~1；实测紧档甜点 0.9，更高无增益 | ✅ 本 skill 实测 |
-   | gpt-image 系（gpt-image-1 / 2） | 编辑模式下传源图 | `input_fidelity=high` | 已知（未见实测） |
-   | Nano Banana 2 Edit | 源图 + 指令或参考图（品牌重设计向） | 提示词强保真锚定 + pin clause | 已知（未见实测） |
-   | Recraft | 1-5 张风格参考图 | 每张分配角色；`style` 权重 | 已知（未见实测） |
-   | Midjourney | `--sref`（风格）/ `--cref`（主体一致） | `--stylize` 0-1000（低=保真） | 已知（未见实测） |
-   | SD / Flux 开源系 | ControlNet 锁结构 + IP-Adapter / LoRA | 两者权重分别控制 | 已知（未见实测） |
+   | 火山引擎 Agent Plan seedream（`doubao-seedream-5.0-lite`） | `image` 传参考图（base64 本地传，URL 可能超时；单张 / 数组最多 14 张），多参考需逐张分配角色 | `reference_strength` 0~1；实测紧档甜点 0.9，更高无增益 | ✅ 本 skill 实测（72 张矩阵 + 复现测试，见 `tests/`） |
+   | gpt-image 系（gpt-image-1 / 2） | 编辑模式下传源图 | `input_fidelity=high` | ⚠️ 已知，未实测 |
+   | Nano Banana 2 Edit | 源图 + 指令或参考图（品牌重设计向） | 提示词强保真锚定 + pin clause | ⚠️ 已知，未实测 |
+   | Recraft | 1-5 张风格参考图 | 每张分配角色；`style` 权重 | ⚠️ 已知，未实测 |
+   | Midjourney | `--sref`（风格）/ `--cref`（主体一致） | `--stylize` 0-1000（低=保真） | ⚠️ 已知，未实测 |
+   | SD / Flux 开源系 | ControlNet 锁结构 + IP-Adapter / LoRA | 两者权重分别控制 | ⚠️ 已知，未实测 |
 
 2. **声称支持但未验证** → 探针实测：同一提示词、同一 seed，带参考与不带参考各生成一张；两张几乎相同 = 参考被忽略，禁止用于保真任务。（检测逻辑已实测验证：seedream 通道上带参考 vs 不带参考对比差异明显，能正确判定"参考被使用"。）
 3. **明确不支持参考图** → 禁止执行生成，告知用户"当前通道无法基于参考图生成，产物将与原图无关"，给出两条出路：换支持参考图的通道；或走**程序化保真兜底**（轮廓/色板来自原图像素，保真由算法保证，但艺术性有限）。
 
-**保真旋钮 → 通道参数映射**
+**保真旋钮 → 通道参数映射**（seedream 列为 ✅ 实测；gpt-image / MJ / SD 列为 ⚠️ 未实测推断）
 
-| 保真旋钮 | seedream 系 | gpt-image 系 | Midjourney | SD / Flux |
+| 保真旋钮 | seedream 系 ✅ | gpt-image 系 ⚠️ | Midjourney ⚠️ | SD / Flux ⚠️ |
 |---------|-------------|--------------|------------|-----------|
 | 1 松 | `reference_strength` 0.5 | `input_fidelity=low` | `--stylize` 600-1000 | IP-Adapter 风格权重高 |
 | 2 标准（默认） | 0.7-0.8 | `input_fidelity=high` | `--stylize` 200-400 | IP-Adapter 中 |
 | 3 紧 | 0.9（实测甜点） | `input_fidelity=high` + 强保真锚定提示 | `--stylize` 0-100 + `--cref` | ControlNet 锁结构 + IP-Adapter 低 |
 
-强风格化工艺（木刻等）在紧档也需配合中文直白保真锚定提示，并接受其工艺保真上限（木刻实测上限约边缘相关性 0.55，strength 0.95 与 0.9 无差别）。
+[VERIFIED] 强风格化工艺（木刻等）在紧档也需配合中文直白保真锚定提示，并接受其工艺保真上限（木刻实测上限约边缘相关性 0.55，strength 0.95 与 0.9 无差别；数据 `tests/72-matrix/`）。
 
-**减法风格（极简）是特例**：极简靠"去除细节"实现，保真强度过高会压住减法——灯塔极简在 0.9 时背景合并不动（单色化 0.348）、0.7 时合并成功（单色化 0.677）且保真反升（0.817）。映射：**复杂背景主体 → 降到 0.7 或更低**；**剪影型主体（日出山脉、月亮）可保持 0.9**。判据是"背景是否合并为单一色块"。同时极简提示词**绝不指定具体色名**（用"从原图提取 2-4 种主色"），指定色名会让模型执行字面色块、覆盖源图主色（主色命中 0.67→0.0）。
+**减法风格（极简）是特例**（[VERIFIED]，seedream 实测）：极简靠"去除细节"实现，保真强度过高会压住减法——灯塔极简在 0.9 时背景合并不动（单色化 0.348）、0.7 时合并成功（单色化 0.677）且保真反升（0.817）。映射：**复杂背景主体 → 降到 0.7 或更低**；**剪影型主体（日出山脉、月亮）可保持 0.9**。判据是"背景是否合并为单一色块"。同时极简提示词**绝不指定具体色名**（用"从原图提取 2-4 种主色"），指定色名会让模型执行字面色块、覆盖源图主色（主色命中 0.67→0.0）。
 
 **生成**
 
@@ -282,6 +300,40 @@ description: "Turn a user-supplied photo into a printed-poster by picking one of
 
 ---
 
+## 会话状态协议（无状态 Agent 适配）
+
+本 skill 是 8 步流程，且步骤②可能"反问→等回答→继续"。在 Claude Skills / 无状态 Agent 里**跨轮上下文不保证保留**，必须显式落盘，否则会丢环节。约定如下：
+
+**状态文件**：在工作目录写 `photo-press-state.md`（无状态 Agent 的持久契约；有状态对话可改存对话摘要）。
+
+| 步骤 | 读什么 | 写什么 |
+|------|--------|--------|
+| ① 三问读图 | 源照片 | 三问答案（是什么 / 张力一句话 / 选工艺理由） |
+| ② 定保护清单 | 三问答案 | PRESERVE / MAY TRANSFORM / REMOVE |
+| ③ 选工艺卡 | craft-cards.md | 所选工艺、路由命中词 |
+| ④ 定双旋钮 | 工艺卡保真上限/抽象倾向 | 保真 × 抽象取值 + 越界说明 |
+| ⑤ 构图 | 源图真实透视线 | 三层 + 最重点 / 最亮点 |
+| ⑥ 编译提示词 | 上述全部 | 8 模块提示词（可选，防泄露可不写全文，写关键决策） |
+| ⑦ 生成 | 状态 + Image1/Image2 | 通道、保真参数、结果图路径 |
+| ⑧ 返检 | 源图 + 状态 | 返检结果、失败维度、是否重跑 |
+
+**反问中断恢复契约**（步骤②"第二问答不出"时）：
+
+1. 落盘：把已完成的问一答案 + 未答的问二写入状态文件的 `pending` 字段：
+   ```
+   ## pending
+   阶段: 第二步-三问（问二未答）
+   问一: [已完成内容]
+   问题: 我还没找到值得做的那个瞬间。你当时为什么按下快门？
+   ```
+2. 向用户提问（不继续生成）。
+3. 恢复：收到回答后，先读状态文件，从 `pending` 阶段续跑，**不得重新读图重问**。
+4. 状态文件在交付成品后清空（或删除），防止陈旧状态污染下一次任务。
+
+**防漂移规则**：每次迭代 / 重跑前重读状态文件的 PRESERVE 清单（步骤②③⑥都依赖它），不靠记忆。
+
+---
+
 ## 质量门禁（交付前自查）
 
 - 三问答齐了吗？第二问（张力）有具体内容吗？
@@ -301,3 +353,4 @@ description: "Turn a user-supplied photo into a printed-poster by picking one of
 
 - `references/craft-cards.md` — 工艺卡注册表（12 种工艺 + 扩展规则 + 实测汇总 + 参考图说明）。**每次生成前必读所选工艺的整张卡。**
 - `examples/` — 真实案例（source + result + 观察记录与返检结果）。**返检没把握时对照案例的格式。**
+- `tests/` — 可复核数据与可执行回归：72 张全量矩阵（`tests/72-matrix/`）、复现测试原始归档（`tests/repro-test/`）、场景矩阵（`tests/scenarios.json`）、回归 runner（`tests/run-repro.py`）。改本文件或工艺卡后跑 `python tests/run-repro.py --dry-run` 做一致性冒烟。

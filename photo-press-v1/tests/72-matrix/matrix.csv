@@ -1,0 +1,73 @@
+cid,sid,source,strength,edge_corr_run1,run1_verdict,vision_run2,vision_craft,vision_subject,final_status,failure_reason
+cyanotype,s1,灯塔 lighthouse,0.9,0.71,pass,pass,pass,pass,PASS,
+cyanotype,s2,日出 sunrise,0.9,0.68,pass,pass,pass,pass,PASS,
+cyanotype,s3,浪 wave,0.9,0.69,pass,pass,pass,pass,PASS,
+cyanotype,s4,黑白人像 portrait,0.9,0.67,pass,pass,pass,pass,PASS,
+cyanotype,s5,彩色花 flower,0.9,0.74,pass,pass,pass,pass,PASS,
+cyanotype,s6,城市街道 city,0.9,0.87,pass,pass,pass,pass,PASS,
+darkroom,s1,灯塔 lighthouse,0.9,0.86,pass,pass,pass,pass,PASS,
+darkroom,s2,日出 sunrise,0.9,0.64,pass,pass,pass,pass,PASS,
+darkroom,s3,浪 wave,0.9,0.72,pass,pass,pass,pass,PASS,
+darkroom,s4,黑白人像 portrait,0.9,0.6,pass,pass,pass,pass,PASS,
+darkroom,s5,彩色花 flower,0.9,0.72,pass,pass,pass,pass,PASS,
+darkroom,s6,城市街道 city,0.9,0.86,pass,pass,pass,pass,PASS,
+ink-wash,s1,灯塔 lighthouse,0.9,0.63,pass,pass,pass,pass,PASS,
+ink-wash,s2,日出 sunrise,0.9,0.55,pass,pass,pass,pass,PASS,
+ink-wash,s3,浪 wave,0.9,0.63,pass,pass,pass,pass,PASS,
+ink-wash,s4,黑白人像 portrait,0.9,0.4,pass,pass,pass,pass,PASS,
+ink-wash,s5,彩色花 flower,0.9,0.34,FAIL,pass,pass,pass,PASS,
+ink-wash,s6,城市街道 city,0.9,0.7,pass,pass,pass,pass,PASS,
+letterpress,s1,灯塔 lighthouse,0.9,0.39,FAIL,pass,pass,pass,PASS,[run1 为修复前状态：强制加文字导致 83% 失败，见 regression.csv]
+letterpress,s2,日出 sunrise,0.9,0.31,FAIL,pass,pass,pass,PASS,[run1 为修复前状态：强制加文字导致 83% 失败，见 regression.csv]
+letterpress,s3,浪 wave,0.9,0.55,pass,pass,pass,pass,PASS,[run1 为修复前状态：强制加文字导致 83% 失败，见 regression.csv]
+letterpress,s4,黑白人像 portrait,0.9,0.32,FAIL,pass,pass,pass,PASS,[run1 为修复前状态：强制加文字导致 83% 失败，见 regression.csv]
+letterpress,s5,彩色花 flower,0.9,0.31,FAIL,pass,pass,pass,PASS,[run1 为修复前状态：强制加文字导致 83% 失败，见 regression.csv] 异常：右下角多出源图没有的元素（verdict=pass）
+letterpress,s6,城市街道 city,0.9,0.32,FAIL,pass,pass,pass,PASS,[run1 为修复前状态：强制加文字导致 83% 失败，见 regression.csv]
+minimalist,s1,灯塔 lighthouse,0.7,0.69,pass,pass,pass,pass,PASS,
+minimalist,s2,日出 sunrise,0.7,0.5,pass,pass,pass,pass,PASS,
+minimalist,s3,浪 wave,0.7,0.33,FAIL,pass,pass,pass,PASS,
+minimalist,s4,黑白人像 portrait,0.7,0.37,FAIL,pass,pass,pass,PASS,异常：画面多出额外的几何形/拼贴色块（verdict=pass）
+minimalist,s5,彩色花 flower,0.7,0.37,FAIL,pass,pass,pass,PASS,
+minimalist,s6,城市街道 city,0.7,0.42,pass,pass,pass,pass,PASS,
+paper-cut,s1,灯塔 lighthouse,0.9,0.46,pass,pass,pass,pass,PASS,
+paper-cut,s2,日出 sunrise,0.9,0.36,FAIL,pass,pass,pass,PASS,
+paper-cut,s3,浪 wave,0.9,0.52,pass,pass,pass,pass,PASS,
+paper-cut,s4,黑白人像 portrait,0.9,0.23,FAIL,pass,pass,pass,PASS,
+paper-cut,s5,彩色花 flower,0.9,0.45,pass,fail,pass,fail,FAIL,花主体被破坏性重绘（无花朵结构，全是源图没有的元素）；具体花朵描述也无法救回
+paper-cut,s6,城市街道 city,0.9,0.42,pass,pass,pass,pass,PASS,
+risograph,s1,灯塔 lighthouse,0.9,0.72,pass,pass,pass,pass,PASS,
+risograph,s2,日出 sunrise,0.9,0.49,pass,pass,pass,pass,PASS,
+risograph,s3,浪 wave,0.9,0.69,pass,pass,pass,pass,PASS,
+risograph,s4,黑白人像 portrait,0.9,0.41,pass,pass,pass,pass,PASS,
+risograph,s5,彩色花 flower,0.9,0.52,pass,fail,fail,fail,FAIL,花主体被重绘/替换为源图没有的无关元素
+risograph,s6,城市街道 city,0.9,0.74,pass,pass,pass,pass,PASS,异常：岩石旁多出额外的红色装饰元素（verdict=pass）
+silkscreen,s1,灯塔 lighthouse,0.9,0.69,pass,pass,pass,pass,PASS,
+silkscreen,s2,日出 sunrise,0.9,0.53,pass,pass,pass,pass,PASS,
+silkscreen,s3,浪 wave,0.9,0.69,pass,pass,pass,pass,PASS,
+silkscreen,s4,黑白人像 portrait,0.9,0.34,FAIL,pass,pass,pass,PASS,
+silkscreen,s5,彩色花 flower,0.9,0.46,pass,pass,pass,pass,PASS,
+silkscreen,s6,城市街道 city,0.9,0.75,pass,pass,pass,pass,PASS,
+torn-paper,s1,灯塔 lighthouse,0.9,0.65,pass,pass,pass,pass,PASS,
+torn-paper,s2,日出 sunrise,0.9,0.46,pass,pass,pass,pass,PASS,异常：背景多出源图没有的浅色雪山元素（verdict=pass）
+torn-paper,s3,浪 wave,0.9,0.59,pass,pass,pass,pass,PASS,
+torn-paper,s4,黑白人像 portrait,0.9,0.44,pass,pass,pass,pass,PASS,
+torn-paper,s5,彩色花 flower,0.9,0.49,pass,pass,pass,pass,PASS,
+torn-paper,s6,城市街道 city,0.9,0.61,pass,pass,pass,pass,PASS,
+ukiyo-e,s1,灯塔 lighthouse,0.9,0.62,pass,pass,pass,pass,PASS,
+ukiyo-e,s2,日出 sunrise,0.9,0.67,pass,pass,pass,pass,PASS,
+ukiyo-e,s3,浪 wave,0.9,0.65,pass,pass,pass,pass,PASS,
+ukiyo-e,s4,黑白人像 portrait,0.9,0.43,pass,pass,pass,pass,PASS,异常：原图形态被替换为无关元素（verdict=pass）
+ukiyo-e,s5,彩色花 flower,0.9,0.4,pass,fail,pass,pass,FAIL,花朵主体被替换为源图没有的无关元素（编织物/花盆等）
+ukiyo-e,s6,城市街道 city,0.9,0.55,pass,pass,pass,pass,PASS,
+watercolor,s1,灯塔 lighthouse,0.9,0.74,pass,pass,pass,pass,PASS,
+watercolor,s2,日出 sunrise,0.9,0.57,pass,pass,pass,pass,PASS,
+watercolor,s3,浪 wave,0.9,0.68,pass,pass,pass,pass,PASS,
+watercolor,s4,黑白人像 portrait,0.9,0.41,pass,pass,pass,pass,PASS,
+watercolor,s5,彩色花 flower,0.9,0.58,pass,pass,pass,pass,PASS,
+watercolor,s6,城市街道 city,0.9,0.78,pass,pass,pass,pass,PASS,
+woodcut,s1,灯塔 lighthouse,0.9,0.57,pass,pass,pass,pass,PASS,
+woodcut,s2,日出 sunrise,0.9,0.52,pass,pass,pass,pass,PASS,
+woodcut,s3,浪 wave,0.9,0.58,pass,pass,pass,pass,PASS,
+woodcut,s4,黑白人像 portrait,0.9,0.38,FAIL,pass,pass,pass,PASS,
+woodcut,s5,彩色花 flower,0.9,0.35,FAIL,pass,pass,pass,PASS,
+woodcut,s6,城市街道 city,0.9,0.58,pass,pass,pass,pass,PASS,

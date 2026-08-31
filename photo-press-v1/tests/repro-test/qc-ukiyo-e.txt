@@ -1,0 +1,11 @@
+{
+    "subject": "pass",
+    "craft": "pass",
+    "artifact": "none",
+    "verdict": "pass",
+    "note": "完整保留源图海景日落的主体与构图，风格转换符合浮世绘多色套版特征",
+    "q1套印错位是否克制": "pass",
+    "q2轮廓线是否清晰": "pass",
+    "q3色数是否2-4": "pass",
+    "q4有没有西式透视渐变混入": "pass"
+}

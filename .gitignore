@@ -1,0 +1,6 @@
+# Python
+__pycache__/
+*.pyc
+
+# runner 运行时输出（自动生成）
+photo-press-v1/tests/results/

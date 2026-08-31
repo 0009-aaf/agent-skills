@@ -1,4 +1,6 @@
 interface:
   display_name: "照片印坊 · Photo Press"
   short_description: "把照片送进印坊，选一种真实工艺（木刻、水彩、撕纸、浮世绘、丝网等）印成海报的多风格工具，保真、分层、抽象可控"
+  # [ASSUMED] 英文 default_prompt：英文方言句式从未实测（见 SKILL.md 模型方言表 ⚠️ 列）。
+  # 实测后改 [VERIFIED] 并附数据来源；当前以 SKILL.md 的中文直白锚定模板为准。
   default_prompt: "Use $photo-press-v1 to turn this photo into a printed poster: read the moment (what it is, why it is worth printing, which craft enlarges it), keep the subject faithful, and verify the result against the source photo."
