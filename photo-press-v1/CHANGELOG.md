@@ -2,6 +2,18 @@
 
 本文件记录 photo-press-v1 的版本与修改历史。版本号与 SKILL.md frontmatter 的 `version` 字段保持一致。
 
+## 1.1.2 — 2026-08-31 runner 双参考修复 + 首次真实回归
+
+**修复（tests/run-repro.py）**
+- 生成调用改为**双参考**：源图（内容通道）+ 工艺 anchor（质感通道），与 72-matrix 基线对齐（specs.csv refs=[源图, anchor]，SKILL.md §6 双通道协议）。
+- 修复 refs 相对路径按 CWD 解析的 bug（校验按 SKILL_ROOT 通过、to_ref 按 CWD 失败 → 真实运行必挂）。校验循环内将 refs 解析为绝对路径。
+
+**首次真实回归（2 工艺，seedream 双参考）**
+- woodcut×灯塔 → pass（6 维 5/5/4/5/5/5）；watercolor×日出 → pass（全 5）。
+- 与 72-matrix 基线 verdict（均 PASS）一致；梯度相关代理 0.546 / 0.499 vs 基线 0.57，量级复现、无异常偏差方向。
+- 本地记录：`tests/results/README-regression-2026-08-31.md`（results/ 不纳入版本管理）。
+- 附注：env `ARK_API_KEY` 为无效 key 时 runner 回退 opencode.json 成功（`_load_api_key` 路径已验证）。
+
 ## 1.1.1 — 2026-08-31 数据订正
 
 审查发现已发布数字与 `tests/72-matrix/matrix.csv` 原始数据不一致，全部订正为与矩阵一致：

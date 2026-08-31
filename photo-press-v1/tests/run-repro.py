@@ -280,14 +280,20 @@ def run(
                     print(f"SKIP {cid} × {scene}: 源图未归档（{source}），seed 可复现")
                     continue
                 raise FileNotFoundError(f"源图不存在: {source}")
+            # refs 解析为绝对路径（与 source 同待遇）：to_ref/call_generate 不感知 SKILL_ROOT，
+            # 相对路径会在 CWD 下解析失败（2026-08-31 首次真实回归暴露）。
+            resolved_refs: list[str] = []
             for r in refs:
                 if r.startswith(("http://", "https://")):
+                    resolved_refs.append(r)
                     continue
                 rp = Path(r)
                 if not rp.is_absolute():
                     rp = SKILL_ROOT / rp
                 if not rp.exists():
                     raise FileNotFoundError(f"参考图不存在: {r}")
+                resolved_refs.append(str(rp))
+            refs = resolved_refs
 
             if dry_run:
                 row = [
@@ -308,7 +314,10 @@ def run(
             else:
                 if key is None:  # 异常不吞：非 dry-run 必须有 key
                     raise RuntimeError("缺少 API key")
-                result = call_generate(key, prompt, refs, strength)
+                # 双参考：源图（内容通道）+ 工艺 anchor（质感通道）。
+                # 与 72-matrix 基线对齐（specs.csv refs=[源图 s{n}, anchor {craft}.jpg]，SKILL.md §6 双通道协议）。
+                refs_with_source = [source] + refs
+                result = call_generate(key, prompt, refs_with_source, strength)
                 try:
                     review = call_review(key, source, result)
                 except Exception as e:

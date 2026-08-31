@@ -1,6 +1,6 @@
 ---
 name: photo-press-v1
-version: 1.1.1
+version: 1.1.2
 description: "Turn a user-supplied photo into a printed-poster by picking one of 12 craft processes (woodcut, multi-block ukiyo-e, watercolor, torn paper, letterpress, risograph, silkscreen, paper-cut, darkroom silver, cyanotype, ink-wash, minimalist) and running it through that craft's full procedure. Reads the photo as three questions (what it is, why it is worth printing, which craft enlarges that moment) instead of a feature checklist, and routes casual style words (retro, fresh, pop, ink-wash, minimal) to the matching craft automatically. Keeps the scene truthful with a preserve/transform/remove contract, a two-channel reference protocol (original photo for content, craft sample for texture), and a fidelity/abstraction dial pair whose ranges come from the chosen craft. Model-agnostic: a channel-capability check maps the fidelity dial onto whatever image model is available (reference-guided editing with a fidelity parameter), and falls back to a procedural-fidelity pipeline when no reference-capable channel exists. Verifies every output against the source photo, including craft-specific quality checks. Use when the user wants a stylized poster from a photo and cares that the subject stays recognizable, with abstraction that comes from the craft rather than from filter keywords."
 ---
 
