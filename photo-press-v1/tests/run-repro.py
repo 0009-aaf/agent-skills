@@ -12,6 +12,7 @@
   - API key 优先读环境变量 ARK_API_KEY；缺失时回退读 ~/.config/opencode/opencode.json
     （provider.volcengine-coding-plan.options.apiKey）。两者都缺则报错退出。
   - 生成通道：Agent Plan seedream（doubao-seedream-5.0-lite）。
+  - 双参考生成：源图（内容通道）+ 工艺 anchor（质感通道），与 72-matrix 基线对齐（specs.csv refs=[源图, anchor]）。
   - 6 维评分：doubao-seed-2.0-lite（subject/space/light/craft/color/text，各 1-5 分）。
   - 每次运行追加写入 <out>/matrix.csv；--dry-run 不调用任何 API。
 """
@@ -156,6 +157,8 @@ def call_generate(
     except urllib.error.HTTPError as e:
         detail = e.read().decode(errors="replace")
         raise RuntimeError(f"生成 HTTP {e.code}: {detail[:300]}") from e
+    except (urllib.error.URLError, TimeoutError) as e:
+        raise RuntimeError(f"生成网络错误: {e}") from e
     items = (data or {}).get("data") or []
     if not items:
         raise RuntimeError(f"生成响应无 data: {str(data)[:200]}")
@@ -165,7 +168,11 @@ def call_generate(
     out = (
         Path(os.environ.get("TEMP", "/tmp")) / f"pp_repro_{int(time.time() * 1000)}.jpg"
     )
-    urllib.request.urlretrieve(url, out)
+    out.parent.mkdir(parents=True, exist_ok=True)  # TEMP 可能指向未创建目录（实测踩过）
+    try:
+        urllib.request.urlretrieve(url, out)
+    except (urllib.error.URLError, OSError) as e:
+        raise RuntimeError(f"结果图下载失败: {e}") from e
     return str(out)
 
 
@@ -206,6 +213,8 @@ def call_review(key: str, source_path: str, result_path: str) -> dict:
     except urllib.error.HTTPError as e:
         detail = e.read().decode(errors="replace")
         raise RuntimeError(f"审查 HTTP {e.code}: {detail[:300]}") from e
+    except (urllib.error.URLError, TimeoutError) as e:
+        raise RuntimeError(f"审查网络错误: {e}") from e
     content = (data.get("choices") or [{}])[0].get("message", {}).get("content", "")
     if not content:
         raise RuntimeError(f"审查响应无内容: {str(data)[:200]}")

@@ -2,6 +2,13 @@
 
 本文件记录 photo-press-v1 的版本与修改历史。版本号与 SKILL.md frontmatter 的 `version` 字段保持一致。
 
+## 1.1.3 — 2026-08-31 runner 错误路径干净化
+
+- `call_generate` / `call_review` 的 `urlopen` 补 `URLError` / `TimeoutError` 捕获 → `RuntimeError`（原网络错误直接 traceback，违反"异常不吞"）。
+- 结果图下载 `urlretrieve` 补 `URLError` / `OSError` 捕获 → `RuntimeError`；下载前 `mkdir` TEMP 父目录（实测踩过 TEMP 指向未创建目录）。
+- 模块 docstring 补充双参考说明。
+- 错误路径 4 项 monkeypatch 测试全 PASS（生成网络/审查网络/下载失败/参考图缺失）。
+
 ## 1.1.2 — 2026-08-31 runner 双参考修复 + 首次真实回归
 
 **修复（tests/run-repro.py）**
