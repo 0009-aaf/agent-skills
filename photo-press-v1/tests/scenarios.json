@@ -4,14 +4,14 @@
     "bw-portrait": {
       "name": "人像 / 黑白源",
       "source": "72-matrix/sources/p_portrait.jpg",
-      "status": "has-data",
-      "notes": "72-matrix 覆盖（s4 黑白人像，失败率 42%）；彩色人像未覆盖"
+      "status": "needs-source",
+      "notes": "72-matrix 覆盖（s4 黑白人像，失败率 42%）；彩色人像未覆盖；源图未归档（picsum seed 可复现）"
     },
     "flower": {
       "name": "花朵 / 毛发",
       "source": "72-matrix/sources/p_flower.jpg",
-      "status": "has-data",
-      "notes": "72-matrix 覆盖（s5）；硬边工艺 3 失败（paper-cut/risograph/ukiyo-e）"
+      "status": "needs-source",
+      "notes": "72-matrix 覆盖（s5）；硬边工艺 3 失败（paper-cut/risograph/ukiyo-e）；源图未归档（picsum seed 可复现）"
     },
     "night": {
       "name": "夜景",
@@ -34,7 +34,7 @@
     "baseline": {
       "name": "基准场景（灯塔/日出/浪/城市）",
       "source": "72-matrix/sources/",
-      "status": "has-data",
+      "status": "ready",
       "notes": "72-matrix 覆盖（s1/s2/s3/s6）"
     }
   },

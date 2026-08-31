@@ -1,6 +1,16 @@
-# Python
+# Python 运行时产物
 __pycache__/
-*.pyc
+*.py[cod]
+.ruff_cache/
+.pytest_cache/
+.mypy_cache/
+*.egg-info/
 
 # runner 运行时输出（自动生成）
-photo-press-v1/tests/results/
+results/
+
+# 系统 / 编辑器
+.DS_Store
+Thumbs.db
+*.swp
+*.log
