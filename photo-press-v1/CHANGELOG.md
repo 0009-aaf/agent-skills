@@ -2,6 +2,16 @@
 
 本文件记录 photo-press-v1 的版本与修改历史。版本号与 SKILL.md frontmatter 的 `version` 字段保持一致。
 
+## 1.1.1 — 2026-08-31 数据订正
+
+审查发现已发布数字与 `tests/72-matrix/matrix.csv` 原始数据不一致，全部订正为与矩阵一致：
+
+- 人像 / 黑白源图失败率 **50% → 42%**（5/12，阈值 <0.4 重算；README / SKILL.md / craft-cards / scenarios.json 四处同步）。
+- 水墨 ink-wash 失败率 **33% → 17%**（1/6；原 0.33 系边界行 corr=0.40 被误判为失败）。
+- risograph / ukiyo-e 视觉判定 **6/6 ✅ → 5/6 ❌ 花**（run2 视觉 s5 花各 1 失败，与 summary.csv / 72-matrix README 一致）。
+- 失败判定阈值表述订正：边缘相关 **>0.4 → <0.4** 视为保真失败（README / craft-cards 笔误，与 72-matrix README 一致）。
+- `_build_matrix.py` 的 summary fail_rate 改为由 RUN1_MATRIX 计算（corr<0.4），杜绝聚合与原始矩阵再次漂移。
+
 ## 1.1.0 — 2026-08-31 可信度与工程化
 
 **可信度（P0）**

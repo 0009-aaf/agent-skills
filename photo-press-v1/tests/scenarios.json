@@ -5,7 +5,7 @@
       "name": "人像 / 黑白源",
       "source": "72-matrix/sources/p_portrait.jpg",
       "status": "has-data",
-      "notes": "72-matrix 覆盖（s4 黑白人像，失败率 50%）；彩色人像未覆盖"
+      "notes": "72-matrix 覆盖（s4 黑白人像，失败率 42%）；彩色人像未覆盖"
     },
     "flower": {
       "name": "花朵 / 毛发",

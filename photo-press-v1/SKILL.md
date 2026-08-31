@@ -1,6 +1,6 @@
 ---
 name: photo-press-v1
-version: 1.1.0
+version: 1.1.1
 description: "Turn a user-supplied photo into a printed-poster by picking one of 12 craft processes (woodcut, multi-block ukiyo-e, watercolor, torn paper, letterpress, risograph, silkscreen, paper-cut, darkroom silver, cyanotype, ink-wash, minimalist) and running it through that craft's full procedure. Reads the photo as three questions (what it is, why it is worth printing, which craft enlarges that moment) instead of a feature checklist, and routes casual style words (retro, fresh, pop, ink-wash, minimal) to the matching craft automatically. Keeps the scene truthful with a preserve/transform/remove contract, a two-channel reference protocol (original photo for content, craft sample for texture), and a fidelity/abstraction dial pair whose ranges come from the chosen craft. Model-agnostic: a channel-capability check maps the fidelity dial onto whatever image model is available (reference-guided editing with a fidelity parameter), and falls back to a procedural-fidelity pipeline when no reference-capable channel exists. Verifies every output against the source photo, including craft-specific quality checks. Use when the user wants a stylized poster from a photo and cares that the subject stays recognizable, with abstraction that comes from the craft rather than from filter keywords."
 ---
 
@@ -120,7 +120,7 @@ description: "Turn a user-supplied photo into a printed-poster by picking one of
 
 - 用户要"脸一模一样" → 不选木刻（上限剪影级），选银盐或水彩。
 - 用户要"再概括一点" → 换更粗的工艺（木刻 / 撕纸），不是在精细工艺上硬简化。
-- **人像 / 黑白源图是高风险输入**（[VERIFIED] 全量测试失败率 50%，见 `tests/72-matrix/`）：优先摄影工艺（银盐 / 蓝晒 / 水彩），或配具体的人物保真描述。
+- **人像 / 黑白源图是高风险输入**（[VERIFIED] 全量测试失败率 42%，见 `tests/72-matrix/`）：优先摄影工艺（银盐 / 蓝晒 / 水彩），或配具体的人物保真描述。
 - **有机复杂形状主体（花 / 人群 / 毛发）对硬边类工艺（剪纸 / 孔版 / 浮世绘）不适用**（[VERIFIED] 视觉实测：72 张矩阵 run2 视觉审查中，花主体在 paper-cut/risograph/ukiyo-e 三个硬边工艺上各 1 个失败，且具体描述无法救回）：此类主体路由到摄影/水性工艺。
 
 ---
@@ -186,7 +186,7 @@ description: "Turn a user-supplied photo into a printed-poster by picking one of
 - **[VERIFIED] 中文直白保真锚定 > 英文 Preserve/Change 模板**：中文直白锚定（"严格保持原图构图不变：…全部与原图一致。只改变媒介：…"）比英文结构提示词保真更高（边缘相关性 0.555 vs 0.419，批量测试）。数据：`tests/72-matrix/`。
 - **[VERIFIED] 强风格化工艺（木刻等）减风格堆叠**：风格词堆叠越密，模型越倾向"重新画一幅"而非"编辑照片"（堆叠 5+ 风格词时边缘相关性 0.555 → 0.419）。只保留工艺卡核心 3-5 个痕迹词，保真锚定句放最前面。
 - **[VERIFIED] 中等风格化工艺（水彩 / 浮世绘 / 银盐）对措辞不敏感**：保真主要由 `reference_strength` 决定，正常写即可。
-- **[VERIFIED] 主体描述具体化对"困难主体"有帮助**：人像/复杂纹理主体配具体描述（"人物轮廓与姿态""花朵形状与花茎走向"）保真提升（人像 0.382→0.395、花 0.354→0.414，回归数据见 `tests/72-matrix/regression.csv`）；人物类主体必须描述"脸/姿态"的保留等级，否则人脸被工艺重绘（人像失败率 50%）。
+- **[VERIFIED] 主体描述具体化对"困难主体"有帮助**：人像/复杂纹理主体配具体描述（"人物轮廓与姿态""花朵形状与花茎走向"）保真提升（人像 0.382→0.395、花 0.354→0.414，回归数据见 `tests/72-matrix/regression.csv`）；人物类主体必须描述"脸/姿态"的保留等级，否则人脸被工艺重绘（人像失败率 42%）。
 - **[ASSUMED] 英文模型用 Preserve/Change 句式与中文锚定"同构"**：gpt-image/MJ/SD 的英文方言从未实测，此为推断，须按第七步探针验证后改用。
 
 1. **画布与布局**：宽高比（默认跟随源图；改比例时明确"扩展"契约——保留主体与地平线，只扩展外围）、区域占比、焦点位置。

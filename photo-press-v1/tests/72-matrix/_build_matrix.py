@@ -112,7 +112,7 @@ RUN1_AGG = {
         "ssim_min": 0.541,
         "corr_avg": 0.541,
         "corr_min": 0.343,
-        "fail_rate": 0.33,
+        "fail_rate": 0.17,  # 由 RUN1_MATRIX 计算（1/6，corr<0.4），旧值 0.33 误算了边界行 0.40
         "sat": "0.22->0.11",
     },
     "letterpress": {
@@ -461,6 +461,13 @@ def main():
         )
         for craft in CRAFTS:
             agg = RUN1_AGG[craft]
+            # fail_rate 由 RUN1_MATRIX 计算（corr<0.4 视为失败），与 matrix.csv/scores.csv 同源，
+            # 防止聚合硬编码与原始矩阵漂移（2026-08-31 订正：ink-wash 0.33→0.17）。
+            fail_rate = round(
+                sum(1 for corr in RUN1_MATRIX[craft] if corr < 0.4)
+                / len(RUN1_MATRIX[craft]),
+                2,
+            )
             vision_fails = sum(
                 1
                 for sid in sorted(SOURCES)
@@ -479,7 +486,7 @@ def main():
                     agg["ssim_min"],
                     agg["corr_avg"],
                     agg["corr_min"],
-                    agg["fail_rate"],
+                    fail_rate,
                     agg["sat"],
                     f"{6 - vision_fails}/6",
                     note,
